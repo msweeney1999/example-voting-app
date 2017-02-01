@@ -1,27 +1,83 @@
-version: "2"
-
-services:
-  vote:
-    image: mekenthompson/example-voting-app-vote:latest
-    labels:
-     - "com.example.description=Vote"
-    ports:
-      - "5000:80"
-
-  redis:
-    image: redis:alpine
-    ports: ["6379"]
-
-  worker:
-    image: mekenthompson/example-voting-app-worker:latest
-
-  db:
-    image: postgres:9.4
-    ports: ["5432"]
-    labels:
-     - "com.example.description=Postgres Database"
-
-  result:
-    image: mekenthompson/example-voting-app-result:latest
-    ports:
-      - "5001:80"
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  name: vote
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/vote
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vote
+      com.example.description: Vote
+      version: latest
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: vote
+        com.example.description: Vote
+        version: latest
+      name: vote
+    spec:
+      containers:
+      - image: mekenthompson/example-voting-app-vote:latest
+        imagePullPolicy: Always
+        name: vote
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  name: vote
+  selfLink: /api/v1/namespaces//services/vote
+spec:
+  clusterIP: 
+  ports:
+  - name: tcp-5000-80-43yfg
+    port: 5000
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: slow
+provisioner: kubernetes.io/azure-disk
+parameters:
+  skuName: Standard_LRS
+  location: australiasoutheast
+  storageAccount: fki22imlpcnyomstr0
