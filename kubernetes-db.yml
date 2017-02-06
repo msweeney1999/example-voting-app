@@ -1,0 +1,104 @@
+kind: StorageClass
+apiVersion: storage.k8s.io/v1beta1
+metadata:
+  name: slow
+provisioner: kubernetes.io/azure-disk
+parameters:
+  skuName: Standard_LRS
+  location: australiasoutheast
+  storageAccount: fki22imlpcnyomstr0
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: postgresclaim
+  annotations:
+      volume.beta.kubernetes.io/storage-class: slow
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+      com.example.description: Postgres-Database
+      version: "9.4"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: db
+        com.example.description: Postgres-Database
+        version: "9.4"
+      name: db
+    spec:
+      containers:
+      - image: postgres:9.4
+        imagePullPolicy: IfNotPresent
+        name: db
+        volumeMounts:
+        - mountPath: "/var/lib/postgresql/data"
+          name: postgresvol
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      volumes:
+        - name: postgresvol
+          persistentVolumeClaim:
+            claimName: postgresclaim
+          fsType: ext4
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /api/v1/namespaces//services/db
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

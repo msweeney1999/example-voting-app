@@ -1,0 +1,68 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: redis
+    version: alpine
+  name: redis
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      version: alpine
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis
+        version: alpine
+      name: redis
+    spec:
+      containers:
+      - image: redis:alpine
+        imagePullPolicy: IfNotPresent
+        name: redis
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis
+    version: alpine
+  name: redis
+  selfLink: /api/v1/namespaces//services/redis
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: redis
+    version: alpine
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

@@ -1,0 +1,73 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+      com.example.description: Postgres-Database
+      version: "9.4"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: db
+        com.example.description: Postgres-Database
+        version: "9.4"
+      name: db
+    spec:
+      containers:
+      - image: postgres:9.4
+        imagePullPolicy: IfNotPresent
+        name: db
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log     
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /api/v1/namespaces//services/db
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
