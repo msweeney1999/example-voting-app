@@ -1,0 +1,323 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: redis
+    version: alpine
+  name: redis
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+      version: alpine
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: redis
+        version: alpine
+      name: redis
+    spec:
+      containers:
+      - image: redis:alpine
+        imagePullPolicy: IfNotPresent
+        name: redis
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: redis
+    version: alpine
+  name: redis
+  selfLink: /api/v1/namespaces//services/redis
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    port: 6379
+    protocol: TCP
+    targetPort: 6379
+  selector:
+    app: redis
+    version: alpine
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "2"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: worker
+  name: worker
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: worker
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: worker
+      name: worker
+    spec:
+      containers:
+      - image: docker/example-voting-app-worker:latest
+        imagePullPolicy: Always
+        name: worker
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: '{"kind":"Deployment","apiVersion":"extensions/v1beta1","metadata":{"name":"vote","selfLink":"/apis/extensions/v1beta1/namespaces//deployments/vote","generation":1,"creationTimestamp":null,"labels":{"app":"vote","com.example.description":"Vote","version":"latest"},"annotations":{"deployment.kubernetes.io/revision":"1"}},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"vote","com.example.description":"Vote","version":"latest"}},"template":{"metadata":{"name":"vote","creationTimestamp":null,"labels":{"app":"vote","com.example.description":"Vote","version":"latest"}},"spec":{"containers":[{"name":"vote","image":"mekenthompson/example-voting-app-vote:latest","resources":{},"terminationMessagePath":"/dev/termination-log","imagePullPolicy":"Always","securityContext":{"privileged":false}}],"restartPolicy":"Always","terminationGracePeriodSeconds":30,"dnsPolicy":"ClusterFirst","securityContext":{}}},"strategy":{"type":"RollingUpdate","rollingUpdate":{"maxUnavailable":1,"maxSurge":1}}},"status":{}}'
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  name: vote
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/vote
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: vote
+      com.example.description: Vote
+      version: latest
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: vote
+        com.example.description: Vote
+        version: latest
+      name: vote
+    spec:
+      containers:
+      - image: mekenthompson/example-voting-app-vote:latest
+        imagePullPolicy: Always
+        name: vote
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  name: vote
+  selfLink: /api/v1/namespaces//services/vote
+spec:
+  clusterIP: 
+  ports:
+  - nodePort: 
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: vote
+    com.example.description: Vote
+    version: latest
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: result
+  name: result
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/result
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: result
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: result
+      name: result
+    spec:
+      containers:
+      - image: mekenthompson/example-voting-app-result
+        imagePullPolicy: Always
+        name: result
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: result
+  name: result
+  selfLink: /api/v1/namespaces//services/result
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    nodePort: 31811
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: result
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: null
+  generation: 1
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /apis/extensions/v1beta1/namespaces//deployments/db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+      com.example.description: Postgres-Database
+      version: "9.4"
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: db
+        com.example.description: Postgres-Database
+        version: "9.4"
+      name: db
+    spec:
+      containers:
+      - image: postgres:9.4
+        imagePullPolicy: IfNotPresent
+        name: db
+        resources: {}
+        securityContext:
+          privileged: false
+        terminationMessagePath: /dev/termination-log     
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  name: db
+  selfLink: /api/v1/namespaces//services/db
+spec:
+  clusterIP: 
+  ports:
+  - name: 
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: db
+    com.example.description: Postgres-Database
+    version: "9.4"
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
