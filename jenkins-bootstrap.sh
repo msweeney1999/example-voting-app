@@ -1,7 +1,7 @@
 #!/bin/bash
 # Jenkins Bootstrap for ACS Kubernetes
 set -x #echo on
-wget https://raw.githubusercontent.com/mekenthompson/example-voting-app/master/kubectl
+wget https://raw.githubusercontent.com/mekenthompson/kubectl/master/kubectl
 chmod +x kubectl
 sudo cp kubectl /usr/local/bin/kubectl
 sudo mkdir /home/tomcat/.kube
