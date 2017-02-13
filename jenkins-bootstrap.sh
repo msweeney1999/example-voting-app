@@ -5,7 +5,7 @@ wget https://raw.githubusercontent.com/mekenthompson/example-voting-app/master/k
 chmod +x kubectl
 sudo cp kubectl /usr/local/bin/kubectl
 sudo mkdir /home/tomcat/.kube
-sudo cp igniteconfig /home/tomcat/.kube/config
+sudo cp config /home/tomcat/.kube/config
 sudo chown tomcat:tomcat /home/tomcat/.kube/config
 sudo usermod -aG docker tomcat
 sudo /opt/bitnami/ctlscript.sh restart
