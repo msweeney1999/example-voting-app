@@ -10,5 +10,7 @@ node {
             )
     }
     stage 'Kubernetes Deployment'
+    sh 'kubectl apply -f kubernetes/basic-full-deployment.yml'
     stage 'Smoke Test'
+    sh 'kubectl get deployments'
 }
