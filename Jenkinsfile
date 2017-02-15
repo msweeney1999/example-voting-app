@@ -13,9 +13,6 @@ node {
     sh 'kubectl apply -f kubernetes/basic-full-deployment.yml'
     sh 'kubectl delete pods -l app=vote'
     sh 'kubectl delete pods -l app=result'
-    sh 'kubectl delete pods -l app=worker'
-    sh 'kubectl delete pods -l app=db'
-    sh 'kubectl delete pods -l app=redis'
     stage 'Smoke Test'
     sh 'kubectl get deployments'
 }
