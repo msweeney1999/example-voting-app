@@ -11,6 +11,7 @@ node {
     }
     stage 'Kubernetes Deployment'
     sh 'kubectl apply -f kubernetes/basic-full-deployment.yml'
+    sh 'kubectl delete pods --all'
     stage 'Smoke Test'
     sh 'kubectl get deployments'
 }
