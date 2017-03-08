@@ -1,12 +1,12 @@
 stage 'Checkout'
 node {
-    git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
+#    git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
    stage 'Docker Builds'
-   docker.withRegistry('https://ignite-microsoft.azurecr.io', 'private-login') {
+   docker.withRegistry('', 'private-login') {
         parallel(
-            "Build Worker App":{def myEnv = docker.build('ignite-microsoft.azurecr.io/example-voting-app-worker:latest', 'worker').push('latest')},
-            "Build Result App":{def myEnv = docker.build('ignite-microsoft.azurecr.io/example-voting-app-result:latest', 'result').push('latest')},
-            "Build Vote App":{def myEnv = docker.build('ignite-microsoft.azurecr.io/example-voting-app-vote:latest', 'vote').push('latest')}
+            "Build Worker App":{def myEnv = docker.build('mekenthompson/example-voting-app-worker:latest', 'worker').push('latest')},
+            "Build Result App":{def myEnv = docker.build('mekenthompson/example-voting-app-result:latest', 'result').push('latest')},
+            "Build Vote App":{def myEnv = docker.build('mekenthompson/example-voting-app-vote:latest', 'vote').push('latest')}
             )
     }
     stage 'Kubernetes Deployment'

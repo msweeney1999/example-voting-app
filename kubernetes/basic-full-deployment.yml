@@ -145,7 +145,7 @@ spec:
       name: vote
     spec:
       containers:
-      - image: ignite-microsoft.azurecr.io/example-voting-app-vote:latest
+      - image: mekenthompson/example-voting-app-vote:latest
         imagePullPolicy: Always
         name: vote
         resources: {}
@@ -153,8 +153,6 @@ spec:
           privileged: false
         terminationMessagePath: /dev/termination-log
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-      - name: ignite-registry
       restartPolicy: Always
       securityContext: {}
       terminationGracePeriodSeconds: 30
@@ -215,7 +213,7 @@ spec:
       name: result
     spec:
       containers:
-      - image: ignite-microsoft.azurecr.io/example-voting-app-result
+      - image: mekenthompson/example-voting-app-result:latest
         imagePullPolicy: Always
         name: result
         resources: {}
@@ -223,8 +221,6 @@ spec:
           privileged: false
         terminationMessagePath: /dev/termination-log
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-      - name: ignite-registry
       restartPolicy: Always
       securityContext: {}
       terminationGracePeriodSeconds: 30
