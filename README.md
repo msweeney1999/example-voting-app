@@ -1,6 +1,15 @@
 Example Voting App
 =========
 
+Azure Pre-Requisites
+---------------
+1. Provision Azure Container Service Kubernetes Cluster
+2. Provision Bitnmai Jenkins on Azure, use the bootstrap script in this repo to prep the Bitnami image for Docker builds
+3. Provision Azure Container Registry
+
+Ensure required credentials are populated in Jenkins and then create a new project based on this repository, using the Jenkisfile to provide the required pipeline.
+
+
 Getting started
 ---------------
 
