@@ -1,5 +1,6 @@
 stage 'Checkout'
 node {
+   git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
    stage 'Docker Builds'
    docker.withRegistry('', 'private-login') {
         parallel(
@@ -15,3 +16,4 @@ node {
     stage 'Smoke Test'
     sh 'kubectl get deployments'
 }
+
