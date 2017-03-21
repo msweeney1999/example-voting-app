@@ -5,11 +5,11 @@ import socket
 import random
 import json
 
-option_a = os.getenv('OPTION_A', "Beer")
-option_b = os.getenv('OPTION_B', "Pizza")
+option_a = os.getenv('OPTION_A', "Monteiths")
+option_b = os.getenv('OPTION_B', "Epic")
 hostname = socket.gethostname()
 
-app = Flask(__name__)
+app = Flask(__name__)s
 
 def get_redis():
     if not hasattr(g, 'redis'):
