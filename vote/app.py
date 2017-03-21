@@ -9,7 +9,7 @@ option_a = os.getenv('OPTION_A', "Monteiths")
 option_b = os.getenv('OPTION_B', "Epic")
 hostname = socket.gethostname()
 
-app = Flask(__name__)s
+app = Flask(__name__)
 
 def get_redis():
     if not hasattr(g, 'redis'):
