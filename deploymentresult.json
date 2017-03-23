@@ -1,0 +1,68 @@
+{
+    "kind": "Deployment",
+    "apiVersion": "extensions/v1beta1",
+    "metadata": {
+        "name": "result",
+        "namespace": "default",
+        "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/result",
+        "uid": "0f5a8f27-044f-11e7-9937-000d3ae0808f",
+        "resourceVersion": "3437796",
+        "generation": 17,
+        "creationTimestamp": "2017-03-08T22:32:06Z",
+        "labels": {
+            "app": "result"
+        },
+        "annotations": {
+            "deployment.kubernetes.io/revision": "2",
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"kind\":\"Deployment\",\"apiVersion\":\"extensions/v1beta1\",\"metadata\":{\"name\":\"result\",\"selfLink\":\"/apis/extensions/v1beta1/namespaces//deployments/result\",\"generation\":1,\"creationTimestamp\":null,\"labels\":{\"app\":\"result\"},\"annotations\":{\"deployment.kubernetes.io/revision\":\"1\"}},\"spec\":{\"replicas\":4,\"selector\":{\"matchLabels\":{\"app\":\"result\"}},\"template\":{\"metadata\":{\"name\":\"result\",\"creationTimestamp\":null,\"labels\":{\"app\":\"result\"}},\"spec\":{\"containers\":[{\"name\":\"result\",\"image\":\"mekenthompson/example-voting-app-result:latest\",\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\",\"securityContext\":{\"privileged\":false}}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}},\"strategy\":{\"type\":\"RollingUpdate\",\"rollingUpdate\":{\"maxUnavailable\":1,\"maxSurge\":1}}},\"status\":{}}"
+        }
+    },
+    "spec": {
+        "replicas": 8,
+        "selector": {
+            "matchLabels": {
+                "app": "result"
+            }
+        },
+        "template": {
+            "metadata": {
+                "name": "result",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "result"
+                }
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "name": "result",
+                        "image": "mekenthompson/example-voting-app-result:latest",
+                        "resources": {},
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "privileged": false
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "securityContext": {}
+            }
+        },
+        "strategy": {
+            "type": "RollingUpdate",
+            "rollingUpdate": {
+                "maxUnavailable": 1,
+                "maxSurge": 1
+            }
+        }
+    },
+    "status": {
+        "observedGeneration": 17,
+        "replicas": 4,
+        "updatedReplicas": 4,
+        "availableReplicas": 4
+    }
+}
