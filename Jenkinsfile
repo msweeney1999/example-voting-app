@@ -9,11 +9,13 @@ node {
     '''
    }
    stage 'Azure Container Registry Login'
-   withCredentials([string(credentialsId: 'acrsecret', variable: 'USERPASS')]) {
+   ws {
+    withCredentials([string(credentialsId: 'acrsecret', variable: 'USERPASS')]) {
     sh '''
       set +x
       docker login -u f75c2xymvqv54 -p $USERPASS https://f75c2xymvqv54.azurecr.io
     '''
+   }
    }
    stage 'Docker Builds'
    docker.withRegistry('https://f75c2xymvqv54.azurecr.io/', 'private-login') {
