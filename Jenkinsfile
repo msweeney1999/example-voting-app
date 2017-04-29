@@ -2,7 +2,7 @@ stage 'Checkout'
 node {
    git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
    stage 'Docker Hub Login'
-   withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
+   withCredentials([string(credentialsId: 'dockersecret', variable: 'USERPASS')]) {
     sh '''
       set +x
       docker login -u mekenthompson -p $USERPASS 
