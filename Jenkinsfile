@@ -1,6 +1,12 @@
 stage 'Checkout'
 node {
    git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
+   stage 'Docker Hub Login'
+   withCredentials([usernameColonPassword(credentialsId: 'dockerhub', variable: 'USERPASS')]) {
+    sh '''
+      set +x
+      docker login -u mekenthompson -p $USERPASS 
+    '''
    stage 'Docker Builds'
    docker.withRegistry('https://f75c2xymvqv54.azurecr.io/', 'private-login') {
         parallel(
