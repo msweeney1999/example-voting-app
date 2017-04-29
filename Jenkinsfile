@@ -7,6 +7,7 @@ node {
       set +x
       docker login -u mekenthompson -p $USERPASS 
     '''
+   }
    stage 'Docker Builds'
    docker.withRegistry('https://f75c2xymvqv54.azurecr.io/', 'private-login') {
         parallel(
@@ -17,4 +18,3 @@ node {
     }
     sh 'echo Smokkkeeeyyy'
 }
-
