@@ -145,7 +145,7 @@ spec:
       name: vote
     spec:
       containers:
-      - image: f75c2xymvqv54.azurecr.io/example-voting-app-vote:latest
+      - image: f75c2xymvqv54.azurecr.io/votingapp/example-voting-app-vote:latest
         imagePullPolicy: Always
         name: vote
         resources: {}
@@ -215,7 +215,7 @@ spec:
       name: result
     spec:
       containers:
-      - image: f75c2xymvqv54.azurecr.io/example-voting-app-result:latest
+      - image: f75c2xymvqv54.azurecr.io/votingapp/example-voting-app-result:latest
         imagePullPolicy: Always
         name: result
         resources: {}
