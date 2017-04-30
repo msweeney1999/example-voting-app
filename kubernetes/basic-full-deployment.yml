@@ -145,13 +145,15 @@ spec:
       name: vote
     spec:
       containers:
-      - image: mekenthompson/example-voting-app-vote:latest
+      - image: f75c2xymvqv54.azurecr.io/example-voting-app-vote:latest
         imagePullPolicy: Always
         name: vote
         resources: {}
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
+        imagePullSecrets:
+        - name: azure-registry
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
@@ -213,13 +215,15 @@ spec:
       name: result
     spec:
       containers:
-      - image: mekenthompson/example-voting-app-result:latest
+      - image: f75c2xymvqv54.azurecr.io/example-voting-app-result:latest
         imagePullPolicy: Always
         name: result
         resources: {}
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
+        imagePullSecrets:
+        - name: azure-registry
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
