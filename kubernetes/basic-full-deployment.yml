@@ -152,8 +152,8 @@ spec:
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
-        imagePullSecrets:
-        - name: azure-registry
+      imagePullSecrets:
+      - name: azure-registry
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
@@ -222,8 +222,8 @@ spec:
         securityContext:
           privileged: false
         terminationMessagePath: /dev/termination-log
-        imagePullSecrets:
-        - name: azure-registry
+      imagePullSecrets:
+      - name: azure-registry
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       securityContext: {}
