@@ -27,6 +27,6 @@ node {
             "Build Vote App":{def myEnv = docker.build('f75c2xymvqv54.azurecr.io/votingapp/example-voting-app-vote:latest', 'vote').push('latest')}
             )
     }
-    stage 'Smoke Tests'
-    sh 'echo Smokkkeeeyyy'
+   stage 'Smoke Test'
+   sh 'echo Smokeeyyyy'
 }
