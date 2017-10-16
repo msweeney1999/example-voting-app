@@ -1,6 +1,8 @@
 Example Voting App
 =========
 
+https://www.youtube.com/watch?v=eSa59DGgBu4
+
 Azure Pre-Requisites
 ---------------
 1. Provision Azure Container Service Kubernetes Cluster
