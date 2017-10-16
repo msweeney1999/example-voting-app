@@ -1,4 +1,4 @@
-stage 'Checkout'
+stage 'Check-out'
 node {
    git 'https://github.com/mekenthompson/example-voting-app.git' // Checks out example votiung app repository
    stage 'Docker Hub Login'
